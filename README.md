@@ -7,7 +7,7 @@ This repository is meant to be submoduled in `nim-beacon-chain/tests/official/` 
 From the nim-beacon-chain project folder:
 
 ```sh
-git submodule add nim-eth2-official-tests ./tests/official/fixtures
+git submodule add https://github.com/status-im/nim-eth2-official-tests ./tests/official/fixtures
 ```
 
 
