@@ -42,3 +42,26 @@ In `latest_block_header` field, the signatures and randao_reveals are
 `"0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"`
 but that is not a valid compressed BLS signature, the zero signature should be:
 `"0xc00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"`
+
+### Commands
+
+Example commands to generate the tests and apply the proper workarounds on UNIX systems.
+To be used from this repo root directory.
+Please double-check the commands.
+
+```sh
+# Out of place replace
+sed 's/18446744073709551615/"18446744073709551615"/g' eth2.0-tests/state/sanity-check_default-config_100-vals.yaml > json_tests/state/sanity-check_default-config_100-vals.yaml
+# Create Nim build directory if it doesn't exist
+mkdir -p build
+# Compile conversion utility
+nim c -r -o:build/yamlToJson fixtures_utils.nim # Will convert "json_tests/state/sanity-check_default-config_100-vals-first_test.yaml" by default
+# In-place replaces
+sed -i 's/"18446744073709551615"/18446744073709551615/g' json_tests/state/sanity-check_default-config_100-vals.json
+sed -i 's/"randao_reveal":"0x00000000/"randao_reveal":"0xc0000000/g' json_tests/state/sanity-check_default-config_100-vals.json
+sed -i 's/"signature":"0x00000000/"signature":"0xc0000000/g' json_tests/state/sanity-check_default-config_100-vals.json
+sed -i 's/"proof_of_possession":"0x00000000/"proof_of_possession":"0xc0000000/g' json_tests/state/sanity-check_default-config_100-vals.json
+sed -i 's/"aggregate_signature":"0x00000000/"aggregate_signature":"0xc0000000/g' json_tests/state/sanity-check_default-config_100-vals.json
+# Interactive delete
+rm -i json_tests/state/sanity-check_default-config_100-vals.yaml
+```

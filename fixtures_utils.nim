@@ -34,8 +34,8 @@ when isMainModule:
 
   const
     # TODO: consume the whole YAML test and not just the first test
-    DefaultYML = "json_tests/state/sanity-check_default-config_100-vals-first_test.yaml"
-    DefaultOutputPath = "json_tests/state/sanity-check_default-config_100-vals-first_test.json"
+    DefaultYML = "json_tests/state/sanity-check_default-config_100-vals.yaml"
+    DefaultOutputPath = "json_tests/state/sanity-check_default-config_100-vals.json"
 
   var fileName, outputPath: string
   if paramCount() == 0:
