@@ -2,6 +2,20 @@
 
 This repo reformats the official Ethereum 2 tests to a format suitable for [Nimbus](https://github.com/status-im/nimbus)/[nim-beacon-chain](https://github.com/status-im/nim-beacon-chain).
 
+## Cloning the repo
+
+Due to upstream usage of [Git LFS](https://git-lfs.github.com) to store the large test vectors,
+there is an extra step after cloning the repo:
+
+```
+git clone https://github.com/status-im/nim-eth2-official-tests
+cd nim-eth2-official-tests
+git lfs install
+git submodule update --init --recursive
+```
+
+## Usage in nim-beacon-chain
+
 This repository is meant to be submoduled in `nim-beacon-chain/tests/official/` with the `fixtures` name.
 
 From the nim-beacon-chain project folder:
