@@ -48,6 +48,6 @@ when isMainModule:
     fileName = paramStr(1)
     outputPath = paramStr(2)
 
-  let jsonString = $DefaultYML.yamlToJson[0]
-  DefaultOutputPath.writeFile jsonString
+  let jsonString = $fileName.yamlToJson[0]
+  outputPath.writeFile jsonString
 
