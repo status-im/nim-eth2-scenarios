@@ -50,4 +50,3 @@ when isMainModule:
 
   let jsonString = $fileName.yamlToJson[0]
   outputPath.writeFile jsonString
-
