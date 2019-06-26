@@ -23,11 +23,13 @@ proc yamlToJson*(file: string): seq[JsonNode] =
     echo "Exception when reading file: " & file
     raise
   except OverflowError:
-    echo "Overflow exception when parsing. Did you stringify 18446744073709551615 (-1)?"
+    echo "Overflow exception when parsing \"", file, "\". Did you stringify the shard and epoch fields?"
     raise
 
 when isMainModule:
-  # Do not forget to stringify FAR_EPOCH_SLOT = 18446744073709551615 (-1) in the YAML file
+  # Do not forget to stringify epoch, shard,
+  # custody_bit_0_indices and custody_bit_1_indices fields
+  # in the YAML file
   # And unstringify it in the produced JSON file
 
   import os, typetraits
