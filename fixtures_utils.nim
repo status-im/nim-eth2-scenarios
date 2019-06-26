@@ -18,12 +18,18 @@ proc yamlToJson*(file: string): seq[JsonNode] =
   try:
     let fs = openFileStream(file)
     defer: fs.close()
-    result = fs.loadToJson()
+    try:
+      result = fs.loadToJson()
+    except OverflowError as e:
+      echo "Overflow exception when parsing. Did you stringify 18446744073709551615 (-1)?"
+      echo "Current file: ", file
+      echo "Current position: ", fs.getPosition()
+      var line: string
+      discard fs.peekLine(line)
+      echo "Peek at the line: ", line
+      raise
   except IOError:
     echo "Exception when reading file: " & file
-    raise
-  except OverflowError:
-    echo "Overflow exception when parsing. Did you stringify 18446744073709551615 (-1)?"
     raise
 
 when isMainModule:
