@@ -9,7 +9,7 @@ import
   # Standard lib
   json, streams,
   # Dependencies
-  yaml.tojson
+  yaml/tojson
 
 # #######################
 # Yaml to JSON conversion

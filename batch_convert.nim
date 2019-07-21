@@ -10,7 +10,6 @@ import
 const yamlPath = "eth2.0-spec-tests"/"tests"
 const jsonPath = "json_tests"
 
-
 const InOut = [
   # Format:
   #   - Path without the "yamlPath" prefixed
@@ -28,14 +27,14 @@ const InOut = [
   "ssz_generic"/"uint"/"uint_bounds",
   "ssz_generic"/"uint"/"uint_random",
   "ssz_generic"/"uint"/"uint_wrong_length",
-  # "ssz_static"/"core"/"ssz_mainnet_random",
-  # "ssz_static"/"core"/"ssz_minimal_lengthy",
-  # "ssz_static"/"core"/"ssz_minimal_max",
-  # "ssz_static"/"core"/"ssz_minimal_nil",
-  # "ssz_static"/"core"/"ssz_minimal_one",
-  # "ssz_static"/"core"/"ssz_minimal_random_chaos",
-  # "ssz_static"/"core"/"ssz_minimal_random",
-  # "ssz_static"/"core"/"ssz_minimal_zero",
+  "ssz_static"/"core"/"ssz_mainnet_random",
+  "ssz_static"/"core"/"ssz_minimal_lengthy",
+  "ssz_static"/"core"/"ssz_minimal_max",
+  "ssz_static"/"core"/"ssz_minimal_nil",
+  "ssz_static"/"core"/"ssz_minimal_one",
+  "ssz_static"/"core"/"ssz_minimal_random_chaos",
+  "ssz_static"/"core"/"ssz_minimal_random",
+  "ssz_static"/"core"/"ssz_minimal_zero",
 ]
 
 proc main() =
@@ -43,7 +42,7 @@ proc main() =
     let inFile = yamlPath / path & ".yaml"
     let outFile = jsonPath / path & ".json"
 
-    let jsonString = $yamlToJson(inFile)[0]
+    let jsonString = pretty(yamlToJson(inFile)[0])
     writeFile(outFile, jsonString)
 
 when isMainModule:

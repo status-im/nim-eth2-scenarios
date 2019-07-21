@@ -1,0 +1,49 @@
+diff --git a/lib/pure/json.nim b/lib/pure/json.nim
+index 4afb889a9..c6cc4e8a2 100644
+--- a/lib/pure/json.nim
++++ b/lib/pure/json.nim
+@@ -166,7 +166,7 @@ type
+     of JString:
+       str*: string
+     of JInt:
+-      num*: BiggestInt
++      num*: BiggestUInt
+     of JFloat:
+       fnum*: float
+     of JBool:
+@@ -193,7 +193,16 @@ proc newJInt*(n: BiggestInt): JsonNode =
+   ## Creates a new `JInt JsonNode`.
+   new(result)
+   result.kind = JInt
+-  result.num  = n
++  result.num  = n.BiggestUint
++
++proc newJInt*(n: BiggestUInt): JsonNode =
++  ## Creates a new `JInt JsonNode`.
++  new(result)
++  result.kind = JInt
++  result.num = n
++
++proc add*(result: var string, x: uint64) =
++  result.add $x
+ 
+ proc newJFloat*(n: float): JsonNode =
+   ## Creates a new `JFloat JsonNode`.
+@@ -242,7 +251,7 @@ proc getBiggestInt*(n: JsonNode, default: BiggestInt = 0): BiggestInt =
+   ##
+   ## Returns ``default`` if ``n`` is not a ``JInt``, or if ``n`` is nil.
+   if n.isNil or n.kind != JInt: return default
+-  else: return n.num
++  else: return n.num.BiggestInt
+ 
+ proc getNum*(n: JsonNode, default: BiggestInt = 0): BiggestInt {.deprecated: "use getInt or getBiggestInt instead".} =
+   ## **Deprecated since v0.18.2:** use ``getInt`` or ``getBiggestInt`` instead.
+@@ -309,7 +318,7 @@ proc `%`*(n: BiggestInt): JsonNode =
+   ## Generic constructor for JSON data. Creates a new `JInt JsonNode`.
+   new(result)
+   result.kind = JInt
+-  result.num  = n
++  result.num  = n.BiggestUInt
+ 
+ proc `%`*(n: float): JsonNode =
+   ## Generic constructor for JSON data. Creates a new `JFloat JsonNode`.
