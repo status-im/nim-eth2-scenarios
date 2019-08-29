@@ -8,7 +8,7 @@ import
 # see README.md
 
 const yamlPath = "eth2.0-spec-tests"/"tests"
-const jsonPath = "json_tests"
+const jsonPath = "json_tests_v0.8.1"
 
 const InOut = [
   # Format:
