@@ -16,6 +16,8 @@ git submodule update --init --recursive
 
 ## Usage in nim-beacon-chain
 
+### For v0.7.1 to v0.8.1
+
 This repository is meant to be used in the devel branch of the [Nimbus build environment](https://github.com/status-im/nimbus)
 where it appears as a submodule in `nimbus/vendor/nim-beacon-chain/tests/official/fixtures`.
 
@@ -29,6 +31,13 @@ This repository contains patches to Nim and NimYAML created to work around a num
   - All those workarounds requires an intermediate reformatted JSON file, but the tests are huge (100k+ lines)
     and will cause review issues in the main repo.
 
-The required patch application is automated in the `run_batch_convert.nims` script. After executing it, you'll find all
-converted test vectors in the `json_tests` folder.
+The required patch application is automated in the `run_batch_convert_v0.8.1.nims` script. After executing it, you'll find all
+converted test vectors in the `json_tests_v0.8.1` folder.
 
+### For v0.8.3
+
+The huge tests now have a Simple-Serialize (SSZ) version that should be preferred
+as it's more compact and do not use Git LFS on the EF side (and risk hitting Github LFS quota ceiling)
+
+Small tests like BLS and shuffling are YAML only and do not have conversion issue
+as they do not use high uint64 numbers.
