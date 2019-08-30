@@ -16,7 +16,8 @@ const InOut = [
   #     yaml files inside will be recursively converted
   #     preserving the directory structure
   "general"/"phase0"/"bls",
-  "mainnet"/"phase0"/"shuffling"
+  "mainnet"/"phase0"/"shuffling",
+  "minimal"/"phase0"/"shuffling"
 ]
 
 proc main() =
