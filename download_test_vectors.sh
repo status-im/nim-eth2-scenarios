@@ -8,6 +8,17 @@ FLAVOURS=(
 	"mainnet"
 )
 
+# signal handler (we only care about the Ctrl+C generated SIGINT)
+REL_PATH="$(dirname "${BASH_SOURCE[0]}")"
+ABS_PATH="$(cd ${REL_PATH}; pwd)"
+cleanup() {
+	echo -e "\nCtrl+C pressed. Cleaning up."
+	cd "$ABS_PATH"
+	rm -rf tarballs tests-*
+	exit 1
+}
+trap cleanup SIGINT
+
 dl_version() {
 	[[ -z "$1" ]] && { echo "usage: dl_version() vX.Y.Z"; exit 1; }
 	version="$1"
