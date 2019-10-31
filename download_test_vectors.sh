@@ -52,13 +52,13 @@ unpack_version() {
 
 	# suppress warnings when unpacking with GNU tar an archive created with BSD tar (probably on macOS)
 	EXTRA_TAR_PARAMS=""
-	tar --version | grep -qi 'gnu' && EXTRA_TAR_PARAMS="--warning=no-unknown-keyword"
+	tar --version | grep -qi 'gnu' && EXTRA_TAR_PARAMS="--warning=no-unknown-keyword --ignore-zeros"
 
 	if [[ ! -d "tests-${version}" ]]; then
 		for flavour in "${FLAVOURS[@]}"; do
 			echo "Unpacking: ${version}/${flavour}.tar.gz"
 			mkdir -p "tests-${version}"
-			tar -C "tests-${version}" --strip-components 1 --ignore-zeros ${EXTRA_TAR_PARAMS} -xzf \
+			tar -C "tests-${version}" --strip-components 1 ${EXTRA_TAR_PARAMS} -xzf \
 				"tarballs/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Tar failed. Aborting."
