@@ -1,2 +1,4 @@
 nimcache/
 build/
+tarballs/
+tests-*/
