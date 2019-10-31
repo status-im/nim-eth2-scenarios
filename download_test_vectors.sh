@@ -2,6 +2,10 @@
 
 set -eu
 
+VERSIONS=(
+	"v0.8.3"
+	"v0.9.0"
+)
 FLAVOURS=(
 	"general"
 	"minimal"
@@ -64,7 +68,22 @@ unpack_version() {
 	fi
 }
 
-for version in "v0.8.3" "v0.9.0"; do
+# download and unpack
+for version in "${VERSIONS[@]}"; do
 	unpack_version "$version"
+done
+
+# delete tarballs and unpacked data from old versions
+for tpath in tarballs/*; do
+	tdir="$(basename "$tpath")"
+	if [[ ! " ${VERSIONS[@]} " =~ " $tdir " ]]; then
+		rm -rf "$tpath"
+	fi
+done
+for tpath in tests-*; do
+	tver="$(echo "$tpath" | cut -d '-' -f 2)"
+	if [[ ! " ${VERSIONS[@]} " =~ " $tver " ]]; then
+		rm -rf "$tpath"
+	fi
 done
 
