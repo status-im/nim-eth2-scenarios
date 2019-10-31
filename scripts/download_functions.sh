@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dl_version() {
-	[[ -z "$1" ]] && { echo "usage: dl_version() vX.Y.Z"; exit 1; }
+  [[ -z "$1" ]] && { echo "usage: dl_version() vX.Y.Z"; exit 1; }
 
   [[ -d "tarballs/$1" ]] || {
     mkdir -p "tarballs/$1"
@@ -12,7 +12,7 @@ dl_version() {
 }
 
 unpack_version() {
-	[[ -z "$1" ]] && { echo "usage: unpack_version() vX.Y.Z"; exit 1; }
+  [[ -z "$1" ]] && { echo "usage: unpack_version() vX.Y.Z"; exit 1; }
 
   [[ -d "tests-$1" ]] || {
     cat "tarballs/$1"/{general,minimal,mainnet}.tar.gz | tar --one-top-level="tests-$1" --strip-components 1 -xzf - -i
