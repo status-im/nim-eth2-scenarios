@@ -18,7 +18,7 @@ git clone https://github.com/status-im/nim-eth2-official-tests
 cd nim-eth2-official-tests
 
 # Download versionned test vectors
-# TODO
+sh download_test_vectors.sh
 
 # SSZ v0.8.1 test vectors
 git lfs install
