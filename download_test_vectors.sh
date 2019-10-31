@@ -57,7 +57,8 @@ unpack_version() {
 	if [[ ! -d "tests-${version}" ]]; then
 		for flavour in "${FLAVOURS[@]}"; do
 			echo "Unpacking: ${version}/${flavour}.tar.gz"
-			tar --one-top-level="tests-${version}" --strip-components 1 --ignore-zeros ${EXTRA_TAR_PARAMS} -xzf \
+			mkdir -p "tests-${version}"
+			tar -C "tests-${version}" --strip-components 1 --ignore-zeros ${EXTRA_TAR_PARAMS} -xzf \
 				"tarballs/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Tar failed. Aborting."
