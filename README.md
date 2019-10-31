@@ -10,17 +10,28 @@ Currently it is used for:
 
 ## Cloning the repo
 
-Due to usage of [Git LFS](https://git-lfs.github.com) to store the large SSZ v0.8.1 test vectors,
-there is an extra step after cloning the repo:
+### Git LFS (Large File Storage)
+
+You need git-lfs installed to clone the JSON test vectors
+```
+git lfs install
+```
+Afterwards any `git clone` will also do the required `git lfs pull` implicitly
+
+It you do not want to download the LFS files, exporting the following variable before `git clone`:
+```
+export GIT_LFS_SKIP_SMUDGE=1
+```
+
+### Cloning and downloading the official test vectors
+
+After cloning the repo, you will need to download the official test vectors.
+This is done via the `download_test_vectors.sh` script.
 
 ```bash
 git clone https://github.com/status-im/nim-eth2-official-tests
 cd nim-eth2-official-tests
 
-# Download versionned test vectors
+# Download versioned test vectors
 sh download_test_vectors.sh
-
-# SSZ v0.8.1 test vectors
-git lfs install
-git submodule update --init --recursive
 ```
