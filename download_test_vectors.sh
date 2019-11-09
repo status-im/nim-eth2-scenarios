@@ -5,6 +5,7 @@ set -eu
 VERSIONS=(
 	"v0.8.3"
 	"v0.9.0"
+  "v0.9.1"
 )
 FLAVOURS=(
 	"general"
@@ -87,4 +88,3 @@ for tpath in tests-*; do
 		rm -rf "$tpath"
 	fi
 done
-
