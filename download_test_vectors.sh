@@ -3,14 +3,14 @@
 set -eu
 
 VERSIONS=(
-	"v0.8.3"
-	"v0.9.0"
+  "v0.8.3"
+  "v0.9.0"
   "v0.9.1"
 )
 FLAVOURS=(
-	"general"
-	"minimal"
-	"mainnet"
+  "general"
+  "minimal"
+  "mainnet"
 )
 
 # signal handler (we only care about the Ctrl+C generated SIGINT)
