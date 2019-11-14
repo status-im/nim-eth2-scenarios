@@ -10,19 +10,6 @@ Currently it is used for:
 
 ## Cloning the repo
 
-### Git LFS (Large File Storage)
-
-You need git-lfs installed to clone the JSON test vectors
-```
-git lfs install
-```
-Afterwards any `git clone` will also do the required `git lfs pull` implicitly
-
-It you do not want to download the LFS files, export the following variable before `git clone`:
-```
-export GIT_LFS_SKIP_SMUDGE=1
-```
-
 ### Cloning and downloading the official test vectors
 
 After cloning the repo, you will need to download the official test vectors.
@@ -35,4 +22,3 @@ cd nim-eth2-official-tests
 # Download versioned test vectors
 ./download_test_vectors.sh
 ```
-
