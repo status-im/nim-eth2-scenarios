@@ -57,7 +57,7 @@ unpack_version() {
 		for flavour in "${FLAVOURS[@]}"; do
 			echo "Unpacking: ${version}/${flavour}.tar.gz"
 			mkdir -p "tests-${version}"
-			tar -C "tests-${version}" --strip-components 1 ${EXTRA_TAR_PARAMS} -xzf \
+			tar -C "tests-${version}" --strip-components 1 ${EXTRA_TAR_PARAMS} --exclude=phase1 -xzf \
 				"tarballs/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Tar failed. Aborting."
