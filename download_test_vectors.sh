@@ -13,7 +13,7 @@ FLAVOURS=(
 
 # signal handler (we only care about the Ctrl+C generated SIGINT)
 REL_PATH="$(dirname "${BASH_SOURCE[0]}")"
-ABS_PATH="$(cd ${REL_PATH}; pwd)"
+ABS_PATH="$(cd "${REL_PATH}"; pwd)"
 cleanup() {
 	echo -e "\nCtrl+C pressed. Cleaning up."
 	cd "$ABS_PATH"
@@ -81,7 +81,7 @@ for tpath in tarballs/*; do
 	fi
 done
 for tpath in tests-*; do
-	tver="$(echo "$tpath" | cut -d '-' -f 2)"
+	tver="$(echo "$tpath" | sed -e's/^tests-//')"
 	if [[ ! " ${VERSIONS[@]} " =~ " $tver " ]]; then
 		rm -rf "$tpath"
 	fi
