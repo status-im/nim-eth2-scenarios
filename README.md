@@ -1,6 +1,6 @@
 # ETH 2 Scenarios
 
-This repo holds Ethereum 2 scenarios of particular interest for [Nimbus Eth2](https://github.com/status-im/nim-beacon-chain)
+This repo holds Ethereum 2 scenarios of particular interest for [Nimbus Eth2](https://github.com/status-im/nimbus-eth2)
 
 At the moment it contains:
 - A test vector downloader for [Ethereum 2.0 specs](https://github.com/ethereum/eth2.0-specs)
