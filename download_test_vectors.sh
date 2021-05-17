@@ -4,7 +4,7 @@ set -eu
 
 VERSIONS=(
   "v1.0.1"
-  "v1.1.0-alpha.4-pre2"
+  "v1.1.0-alpha.4"
 )
 FLAVOURS=(
   "general"
@@ -32,14 +32,8 @@ dl_version() {
 	for flavour in "${FLAVOURS[@]}"; do
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: ${version}/${flavour}.tar.gz"
-            # TODO temporary hack; remove when official v1.0.0-alpha.4 appears
-            if [[ "${version}" == "v1.0.1" ]]; then
-              github_account="ethereum"
-            else
-              github_account="protolambda"
-            fi
 			curl --location --remote-name --silent --show-error \
-				"https://github.com/${github_account}/eth2.0-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
+				"https://github.com/ethereum/eth2.0-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
 					rm -f "${flavour}.tar.gz"
