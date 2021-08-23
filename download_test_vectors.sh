@@ -32,7 +32,7 @@ dl_version() {
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: ${version}/${flavour}.tar.gz"
 			curl --location --remote-name --silent --show-error \
-				"https://github.com/ethereum/eth2.0-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
+				"https://github.com/ethereum/consensus-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
 					rm -f "${flavour}.tar.gz"
