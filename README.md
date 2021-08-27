@@ -1,9 +1,9 @@
 # ETH 2 Scenarios
 
-This repo holds Ethereum 2 scenarios of particular interest for [Nimbus Eth2](https://github.com/status-im/nimbus-eth2)
+This repo holds Ethereum consensus scenarios of particular interest for [Nimbus Eth2](https://github.com/status-im/nimbus-eth2)
 
 At the moment it contains:
-- A test vector downloader for [Ethereum 2.0 specs](https://github.com/ethereum/consensus-specs)
+- A test vector downloader for [Ethereum consensus specs](https://github.com/ethereum/consensus-specs)
 
 Future plans include:
 - Bugs arising from usage or fuzzing
