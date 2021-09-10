@@ -3,7 +3,7 @@
 set -eu
 
 VERSIONS=(
-  "v1.1.0-beta.3"
+  "v1.1.0-beta.4"
 )
 FLAVOURS=(
   "general"
