@@ -11,9 +11,9 @@ Future plans include:
 
 ## Cloning the repo
 
-### Cloning and downloading the official test vectors
+### Cloning and downloading the consensus spec test vectors
 
-After cloning the repo, you will need to download the official test vectors.
+After cloning the repo, you will need to download the consensus spec test vectors.
 This is done via the `download_test_vectors.sh` script.
 
 ```bash
