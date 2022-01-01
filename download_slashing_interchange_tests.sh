@@ -3,10 +3,10 @@
 set -eu
 
 VERSIONS=(
-  "v5.0.0"
+  "v5.2.1"
 )
 FLAVOURS=(
-  "eip-3076-tests-v5.0.0"
+  "v5.2.1"
 )
 
 # signal handler (we only care about the Ctrl+C generated SIGINT)
@@ -30,7 +30,7 @@ dl_version() {
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: slashing-${version}/${flavour}.tar.gz"
 			curl --location --remote-name --show-error \
-				"https://github.com/eth2-clients/slashing-protection-interchange-tests/releases/download/${version}/${flavour}.tar.gz" \
+				"https://github.com/eth2-clients/slashing-protection-interchange-tests/archive/refs/tags/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
 					rm -f "${flavour}.tar.gz"
