@@ -30,7 +30,7 @@ dl_version() {
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: slashing-${version}/${flavour}.tar.gz"
 			curl --location --remote-name --show-error \
-				"https://github.com/eth2-clients/slashing-protection-interchange-tests/archive/refs/tags/${flavour}.tar.gz" \
+				"https://github.com/eth-clients/slashing-protection-interchange-tests/archive/refs/tags/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
 					rm -f "${flavour}.tar.gz"
