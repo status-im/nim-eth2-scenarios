@@ -36,7 +36,7 @@ dl_version() {
 	for flavour in "${FLAVOURS[@]}"; do
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: slashing-${version}/${flavour}.tar.gz"
-			curl --location --remote-name --silent --show-error --retry 3 --retry-all-errors \
+			curl --location --remote-name --silent --show-error --retry 3 --retry-connrefused \
 				"https://github.com/eth-clients/slashing-protection-interchange-tests/archive/refs/tags/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
