@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Copyright (c) 2019-2022 Status Research & Development GmbH. Licensed under
+# either of:
+# - Apache License, version 2.0
+# - MIT license
+# at your option. This file may not be copied, modified, or distributed except
+# according to those terms.
+
 set -eu
 
 VERSIONS=(
@@ -31,7 +38,7 @@ dl_version() {
 	for flavour in "${FLAVOURS[@]}"; do
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: ${version}/${flavour}.tar.gz"
-			curl --location --remote-name --silent --show-error --retry 3 --retry-all-errors \
+			curl --location --remote-name --silent --show-error --retry 3 --retry-connrefused \
 				"https://github.com/ethereum/consensus-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
@@ -47,24 +54,31 @@ unpack_version() {
 	[[ -z "$1" ]] && { echo "usage: unpack_version() vX.Y.Z"; exit 1; }
 	version="$1"
 
-	dl_version "$version"
+	local retries=0 ok=0
+	while (( !ok && ++retries <= 5 )); do  # downloaded tar.gz may be corrupted
+		dl_version "$version"
 
-	# suppress warnings when unpacking with GNU tar an archive created with BSD tar (probably on macOS)
-	EXTRA_TAR_PARAMS=""
-	tar --version | grep -qi 'gnu' && EXTRA_TAR_PARAMS="--warning=no-unknown-keyword --ignore-zeros"
+		# suppress warnings when unpacking with GNU tar an archive created with BSD tar (probably on macOS)
+		EXTRA_TAR_PARAMS=""
+		tar --version | grep -qi 'gnu' && EXTRA_TAR_PARAMS="--warning=no-unknown-keyword --ignore-zeros"
 
-	if [[ ! -d "tests-${version}" ]]; then
-		for flavour in "${FLAVOURS[@]}"; do
-			echo "Unpacking: ${version}/${flavour}.tar.gz"
-			mkdir -p "tests-${version}"
-			tar -C "tests-${version}" --strip-components 1 ${EXTRA_TAR_PARAMS} --exclude=phase1 -xzf \
-				"tarballs/${version}/${flavour}.tar.gz" \
-				|| {
-					echo "Tar failed. Aborting."
-					rm -rf "tests-${version}"
-					exit 1
-				}
-		done
+		ok=1
+		if [[ ! -d "tests-${version}" ]]; then
+			for flavour in "${FLAVOURS[@]}"; do
+				echo "Unpacking: ${version}/${flavour}.tar.gz"
+				mkdir -p "tests-${version}"
+				tar -C "tests-${version}" --strip-components 1 ${EXTRA_TAR_PARAMS} --exclude=phase1 -xzf \
+					"tarballs/${version}/${flavour}.tar.gz" \
+					|| {
+						rm -rf "tests-${version}" "tarballs/${version}/${flavour}.tar.gz"
+						ok=0
+					}
+			done
+		fi
+	done
+	if (( !ok )); then
+		echo "Unpacking failed too often. Aborting."
+		exit 1
 	fi
 }
 
