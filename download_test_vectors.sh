@@ -75,12 +75,18 @@ done
 
 # delete tarballs and unpacked data from old versions
 for tpath in tarballs/*; do
+	if [[ "$tpath" == "tarballs/slashing-"* ]]; then
+		continue  # avoid interfering with slashing interchange tests
+	fi
 	tdir="$(basename "$tpath")"
 	if [[ ! " ${VERSIONS[@]} " =~ " $tdir " ]]; then
 		rm -rf "$tpath"
 	fi
 done
 for tpath in tests-*; do
+	if [[ "$tpath" == "tests-slashing-"* ]]; then
+		continue  # avoid interfering with slashing interchange tests
+	fi
 	tver="$(echo "$tpath" | sed -e's/^tests-//')"
 	if [[ ! " ${VERSIONS[@]} " =~ " $tver " ]]; then
 		rm -rf "$tpath"
