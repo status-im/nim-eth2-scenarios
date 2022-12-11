@@ -74,7 +74,7 @@ done
 # delete tarballs and unpacked data from old versions
 for tpath in tarballs/slashing-*; do
 	tdir="$(basename "$tpath")"
-	if [[ ! " ${VERSIONS[@]} " =~ " $tdir " ]]; then
+	if [[ ! " slashing-${VERSIONS[@]} " =~ " $tdir " ]]; then
 		rm -rf "$tpath"
 	fi
 done
