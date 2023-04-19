@@ -7,7 +7,7 @@
 # at your option. This file may not be copied, modified, or distributed except
 # according to those terms.
 
-set -eu
+set -eux
 
 VERSIONS=(
   "v1.3.0"
