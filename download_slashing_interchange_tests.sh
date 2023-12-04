@@ -10,10 +10,10 @@
 set -eu
 
 VERSIONS=(
-  "v5.2.1"
+  "v5.3.0"
 )
 FLAVOURS=(
-  "v5.2.1"
+  "v5.3.0"
 )
 
 # signal handler (we only care about the Ctrl+C generated SIGINT)
