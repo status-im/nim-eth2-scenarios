@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2019-2023 Status Research & Development GmbH. Licensed under
+# Copyright (c) 2019-2024 Status Research & Development GmbH. Licensed under
 # either of:
 # - Apache License, version 2.0
 # - MIT license
@@ -10,7 +10,7 @@
 set -eu
 
 VERSIONS=(
-  "v1.4.0"
+  "v1.5.0-alpha.0"
 )
 FLAVOURS=(
   "general"
