@@ -7,10 +7,10 @@
 # at your option. This file may not be copied, modified, or distributed except
 # according to those terms.
 
-set -eu
+set -euo pipefail
 
 VERSIONS=(
-  "v1.5.0-alpha.2"
+  "v1.5.0-alpha.3"
 )
 FLAVOURS=(
   "general"
