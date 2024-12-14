@@ -10,7 +10,7 @@
 set -euo pipefail
 
 VERSIONS=(
-  "v1.5.0-alpha.9"
+  "v1.5.0-alpha.10"
 )
 FLAVOURS=(
   "general"
