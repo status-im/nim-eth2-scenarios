@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2019-2024 Status Research & Development GmbH. Licensed under
+# Copyright (c) 2019-2025 Status Research & Development GmbH. Licensed under
 # either of:
 # - Apache License, version 2.0
 # - MIT license
 # at your option. This file may not be copied, modified, or distributed except
 # according to those terms.
 
-set -euo pipefail
+set -Eeuo pipefail
 
 VERSIONS=(
-  "v1.5.0-alpha.10"
+  "v1.5.0-beta.0"
 )
 FLAVOURS=(
   "general"
