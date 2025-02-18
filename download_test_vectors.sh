@@ -38,7 +38,7 @@ dl_version() {
 	for flavour in "${FLAVOURS[@]}"; do
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: ${version}/${flavour}.tar.gz"
-			curl --location --remote-name --silent --show-error --retry 3 --retry-connrefused \
+			curl --location --remote-name --silent --show-error --retry 3 --retry-all-errors \
 				"https://github.com/ethereum/consensus-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2021-2022 Status Research & Development GmbH. Licensed under
+# Copyright (c) 2021-2025 Status Research & Development GmbH. Licensed under
 # either of:
 # - Apache License, version 2.0
 # - MIT license
 # at your option. This file may not be copied, modified, or distributed except
 # according to those terms.
 
-set -eu
+set -Eeuo pipefail
 
 VERSIONS=(
   "v5.3.0"
@@ -36,7 +36,7 @@ dl_version() {
 	for flavour in "${FLAVOURS[@]}"; do
 		if [[ ! -e "${flavour}.tar.gz" ]]; then
 			echo "Downloading: slashing-${version}/${flavour}.tar.gz"
-			curl --location --remote-name --silent --show-error --retry 3 --retry-connrefused \
+			curl --location --remote-name --silent --show-error --retry 3 --retry-all-errors \
 				"https://github.com/eth-clients/slashing-protection-interchange-tests/archive/refs/tags/${flavour}.tar.gz" \
 				|| {
 					echo "Curl failed. Aborting"
