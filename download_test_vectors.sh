@@ -9,13 +9,16 @@
 
 set -Eeuo pipefail
 
-VERSIONS=(
-  "v1.6.0-alpha.0"
-)
+# Override versions, eg: TEST_VECTORS_VERSIONS=nightly
+if [[ -n "${TEST_VECTORS_VERSIONS:-}" ]]; then
+	IFS=',' read -ra VERSIONS <<< "$TEST_VECTORS_VERSIONS"
+else
+	VERSIONS=("v1.5.0-beta.5")
+fi
 FLAVOURS=(
-  "general"
-  "minimal"
-  "mainnet"
+	"general"
+	"minimal"
+	"mainnet"
 )
 
 # signal handler (we only care about the Ctrl+C generated SIGINT)
@@ -30,28 +33,72 @@ cleanup() {
 trap cleanup SIGINT
 
 dl_version() {
-	[[ -z "$1" ]] && { echo "usage: dl_version() vX.Y.Z"; exit 1; }
+	[[ -z "$1" ]] && { echo "usage: dl_version() vX.Y.Z | nightly"; exit 1; }
 	version="$1"
 
 	mkdir -p "tarballs/${version}"
 	pushd "tarballs/${version}" >/dev/null
-	for flavour in "${FLAVOURS[@]}"; do
-		if [[ ! -e "${flavour}.tar.gz" ]]; then
-			echo "Downloading: ${version}/${flavour}.tar.gz"
-			curl --location --remote-name --silent --show-error --retry 3 --retry-all-errors \
-				"https://github.com/ethereum/consensus-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
-				|| {
-					echo "Curl failed. Aborting"
-					rm -f "${flavour}.tar.gz"
+
+	if [[ "$version" == "nightly" ]]; then
+		if [[ -z "${GITHUB_TOKEN:-}" ]]; then
+			echo "Error GITHUB_TOKEN is not set"
+			exit 1
+		fi
+
+		repo="ethereum/consensus-specs"
+		api="https://api.github.com"
+		auth_header="Authorization: token ${GITHUB_TOKEN}"
+
+		run_id=$(curl -s -H "${auth_header}" \
+			"${api}/repos/${repo}/actions/workflows/generate_vectors.yml/runs?branch=dev&status=success&per_page=1" \
+			| jq -r '.workflow_runs[0].id')
+
+		if [[ "${run_id}" == "null" || -z "${run_id}" ]]; then
+			echo "No successful nightly workflow run found"
+			exit 1
+		fi
+
+		echo "Downloading nightly test vectors for run: ${run_id}"
+		curl -s -H "${auth_header}" "${api}/repos/${repo}/actions/runs/${run_id}/artifacts" |
+			jq -c '.artifacts[] | {name, url: .archive_download_url}' |
+			while read -r artifact; do
+				name=$(echo "${artifact}" | jq -r .name)
+				url=$(echo "${artifact}" | jq -r .url)
+
+				if [[ "$name" == "consensustestgen.log" ]]; then
+					continue
+				fi
+
+				echo "Downloading artifact: ${name}"
+				curl --progress-bar --location --show-error --retry 3 --retry-all-errors \
+						-H "${auth_header}" -H "Accept: application/vnd.github+json" \
+						--output "${name}.zip" "${url}" || {
+					echo "Failed to download ${name}"
 					exit 1
 				}
-		fi
-	done
+
+				unzip -qo "${name}.zip"
+				rm -rf "${name}.zip"
+			done
+	else
+		for flavour in "${FLAVOURS[@]}"; do
+			if [[ ! -e "${flavour}.tar.gz" ]]; then
+				echo "Downloading: ${version}/${flavour}.tar.gz"
+				curl --progress-bar --location --remote-name --show-error --retry 3 --retry-all-errors \
+					"https://github.com/ethereum/consensus-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
+					|| {
+						echo "Curl failed. Aborting"
+						rm -f "${flavour}.tar.gz"
+						exit 1
+					}
+			fi
+		done
+	fi
 	popd >/dev/null
 }
 
 unpack_version() {
-	[[ -z "$1" ]] && { echo "usage: unpack_version() vX.Y.Z"; exit 1; }
+	[[ -z "$1" ]] && { echo "usage: unpack_version() vX.Y.Z | nightly"; exit 1; }
 	version="$1"
 
 	local retries=0 ok=0
