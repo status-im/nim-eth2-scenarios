@@ -9,9 +9,9 @@
 
 set -Eeuo pipefail
 
-# Override versions, eg: TEST_VECTORS_VERSIONS=nightly
-if [[ -n "${TEST_VECTORS_VERSIONS:-}" ]]; then
-	IFS=',' read -ra VERSIONS <<< "$TEST_VECTORS_VERSIONS"
+# Override versions, eg: CONSENSUS_TEST_VECTOR_VERSIONS=nightly
+if [[ -n "${CONSENSUS_TEST_VECTOR_VERSIONS:-}" ]]; then
+	IFS=',' read -ra VERSIONS <<< "$CONSENSUS_TEST_VECTOR_VERSIONS"
 else
 	VERSIONS=("v1.6.0-alpha.0")
 fi
