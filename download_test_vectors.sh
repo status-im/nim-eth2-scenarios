@@ -78,7 +78,7 @@ dl_version() {
 				}
 
 				unzip -qo "${name}.zip"
-				rm -rf "${name}.zip"
+				rm -f "${name}.zip"
 			done
 	else
 		for flavour in "${FLAVOURS[@]}"; do
