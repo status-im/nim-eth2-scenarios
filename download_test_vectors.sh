@@ -45,6 +45,13 @@ dl_version() {
 			exit 1
 		fi
 
+		for cmd in unzip jq; do
+			if ! command -v "${cmd}" >/dev/null 2>&1; then
+				echo "Error ${cmd} is not installed"
+				exit 1
+			fi
+		done
+
 		repo="ethereum/consensus-specs"
 		api="https://api.github.com"
 		auth_header="Authorization: token ${GITHUB_TOKEN}"
