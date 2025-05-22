@@ -13,7 +13,7 @@ set -Eeuo pipefail
 if [[ -n "${TEST_VECTORS_VERSIONS:-}" ]]; then
 	IFS=',' read -ra VERSIONS <<< "$TEST_VECTORS_VERSIONS"
 else
-	VERSIONS=("v1.5.0-beta.5")
+	VERSIONS=("v1.6.0-alpha.0")
 fi
 FLAVOURS=(
 	"general"
