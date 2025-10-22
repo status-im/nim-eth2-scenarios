@@ -1,0 +1,44 @@
+# Copyright (c) 2025 Status Research & Development GmbH. Licensed under
+# either of:
+# - Apache License, version 2.0
+# - MIT license
+# at your option. This file may not be copied, modified, or distributed except
+# according to those terms.
+
+name: Update consensus-specs
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Get latest consensus-specs release
+        id: latest
+        run: |
+          version="$(gh release list -R ethereum/consensus-specs -L 1 --json tagName -q '.[0].tagName')"
+          echo "version=${version}" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update
+        run: |
+          old_version="$(grep -Eo 'VERSIONS=\("([^"]*)"\)' download_test_vectors.sh | sed -E 's/VERSIONS=\("([^"]*)"\)/\1/')"
+          sed -i -E "s/(VERSIONS=\(\")[^\"]*(\")/\1${{ steps.latest.outputs.version }}\2/" download_test_vectors.sh
+          if ! git diff --exit-code; then
+            ./download_test_vectors.sh
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add download_test_vectors.sh
+            git commit -m "download ${{ steps.latest.outputs.version }} reference tests and stop downloading ${old_version} reference tests"
+            git push origin master
+          fi
