@@ -13,7 +13,7 @@ set -Eeuo pipefail
 if [[ -n "${CONSENSUS_TEST_VECTOR_VERSIONS:-}" ]]; then
 	IFS=',' read -ra VERSIONS <<< "$CONSENSUS_TEST_VECTOR_VERSIONS"
 else
-	VERSIONS=("v1.6.0-beta.0")
+	VERSIONS=("v1.6.0-beta.1")
 fi
 FLAVOURS=(
 	"general"
@@ -92,7 +92,7 @@ dl_version() {
 			if [[ ! -e "${flavour}.tar.gz" ]]; then
 				echo "Downloading: ${version}/${flavour}.tar.gz"
 				curl --progress-bar --location --remote-name --show-error --retry 3 --retry-all-errors \
-					"https://github.com/ethereum/consensus-spec-tests/releases/download/${version}/${flavour}.tar.gz" \
+					"https://github.com/ethereum/consensus-specs/releases/download/${version}/${flavour}.tar.gz" \
 					|| {
 						echo "Curl failed. Aborting"
 						rm -f "${flavour}.tar.gz"
