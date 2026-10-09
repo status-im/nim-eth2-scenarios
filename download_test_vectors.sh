@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2019-2025 Status Research & Development GmbH. Licensed under
+# Copyright (c) 2019-2026 Status Research & Development GmbH. Licensed under
 # either of:
 # - Apache License, version 2.0
 # - MIT license
@@ -13,7 +13,7 @@ set -Eeuo pipefail
 if [[ -n "${CONSENSUS_TEST_VECTOR_VERSIONS:-}" ]]; then
 	IFS=',' read -ra VERSIONS <<< "$CONSENSUS_TEST_VECTOR_VERSIONS"
 else
-	VERSIONS=("v1.7.0-beta.3")
+	VERSIONS=("v1.7.0-beta.4")
 fi
 FLAVOURS=(
 	"general"
